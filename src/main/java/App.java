@@ -1,14 +1,13 @@
 import dao.ProductDao;
-import products.Product;
 import lombok.var;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
+import products.Product;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Scanner;
-
 
 
 public class App {
@@ -42,7 +41,7 @@ public class App {
         System.out.println("5) Remove a product");
 
 
-        var input = sc.nextInt();
+        var input = Integer.parseInt(sc.nextLine());
         switch (input) {
             case 1:
                 System.out.println("Find which id?");

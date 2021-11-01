@@ -22,7 +22,13 @@ public class Product {
     private String description;
     private LocalDate datePublished;
 
-
+    public Product(int id, String name, double price, String description, LocalDate datePublished) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.datePublished = LocalDate.now();
+    }
 
     //NONARG CONSTRUCTOR -> SPECIFICALLY NEEDED
     public Product() {
