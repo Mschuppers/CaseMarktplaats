@@ -6,14 +6,17 @@
              version="2.2"> <!-- ns = namespace, soort package -->
     <!-- xsd = xml schema definition, specificatie van deze XML file -->
 
-    <persistence-unit name="MySQL">
+    <persistence-unit name="h2">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>products.Product</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jpa-database"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="root"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:eentestdatabase"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="hibernate.dialect" value= "org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.formatsql" value = "true" />
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
