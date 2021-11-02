@@ -2,6 +2,7 @@ import dao.ProductDao;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
+import screen.AddProduct;
 
 import javax.inject.Inject;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class App {
     private Logger log;
 
     @Inject
-    private ProductDao dao;
+    private AddProduct addProduct;
 
     @Inject
     private Scanner sc;
@@ -52,9 +53,8 @@ public class App {
 //                all.forEach(System.out::println);
                     break;
                 case 3:
-                    dao.insertProduct();
+                    addProduct.insertProduct();
                     break;
-
                 case 4:
 //                int pId = sc.nextInt();
 //                System.out.println("Update which id?");
