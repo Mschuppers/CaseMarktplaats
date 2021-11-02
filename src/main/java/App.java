@@ -1,5 +1,4 @@
 import dao.ProductDao;
-import lombok.var;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
@@ -41,32 +40,32 @@ public class App {
         System.out.println("5) Remove a product");
 
 
-        var input = Integer.parseInt(sc.nextLine());
+        int input = Integer.parseInt(sc.nextLine());
         switch (input) {
             case 1:
                 System.out.println("Find which id?");
-                int id = sc.nextInt();
-                dao.findProduct(id);
+
+                dao.findProduct(Integer.parseInt(sc.nextLine()));
                 break;
             case 2:
-                dao.findAllProducts();
-                List<Product> all = dao.findAllProducts();
-                all.forEach(System.out::println);
+//                dao.findAllProducts();
+//                List<Product> all = dao.findAllProducts();
+//                all.forEach(System.out::println);
                 break;
             case 3:
-                dao.insertProduct();
-                break;
+//                dao.insertProduct();
+//                break;
             case 4:
-                int pId = sc.nextInt();
-                System.out.println("Update which id?");
-                dao.updateProduct(dao.findProduct(pId));
-                break;
+//                int pId = sc.nextInt();
+//                System.out.println("Update which id?");
+//                dao.updateProduct(dao.findProduct(pId));
+//                break;
             case 5:
-                System.out.println("Delete which id?");
-                id = sc.nextInt();
-                Product x = dao.findProduct(id);
-                dao.deleteProduct(x);
-                break;
+//                System.out.println("Delete which id?");
+//                id = sc.nextInt();
+//                Product x = dao.findProduct(id);
+//                dao.deleteProduct(x);
+//                break;
             default:
                 System.out.println("default");
         }
