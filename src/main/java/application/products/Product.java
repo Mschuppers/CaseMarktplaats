@@ -1,4 +1,4 @@
-package products;
+package application.products;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class Product {
     @NotNull(message = "Invoer mag niet leeg zijn")
     @Pattern(regexp = "\\d*[.]\\d{2}?")
     private double price;
-    //@Size(min = 1, max = 200, message = "Maximaal 200 karakters")
+    @Size(min = 1, max = 200, message = "Maximaal 200 karakters")
     private String description;
     @PastOrPresent
     private LocalDate datePublished;
@@ -35,20 +35,7 @@ public class Product {
     @ManyToOne
     private User user;
 
-    //ALLARG CONSTRUCTOR -> SPECIFICALLY NEEDED
-   /* public Product(int id, String name, double price, String description, LocalDate datePublished, int addedById) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.datePublished = LocalDate.now();
-        this.addedById = 1;  //TODO Entry point for userID FK
-    }*/
 
-    //NONARG CONSTRUCTOR -> SPECIFICALLY NEEDED
-    /*public Product() {
-
-    }*/
 
 
 }

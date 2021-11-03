@@ -1,8 +1,10 @@
-import dao.ProductDao;
+package application;
+
+import application.dao.ProductDao;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
-import screen.AddProduct;
+import application.screen.AddProductScreen;
 
 import javax.inject.Inject;
 import java.util.Scanner;
@@ -13,7 +15,10 @@ public class App {
     private Logger log;
 
     @Inject
-    private AddProduct addProduct;
+    private AddProductScreen addProduct;
+
+    @Inject
+    ProductDao PDao;
 
     @Inject
     private Scanner sc;
@@ -43,10 +48,9 @@ public class App {
             int input = Integer.parseInt(sc.nextLine());
             switch (input) {
                 case 1:
-//                System.out.println("Find which id?");
-//
-//                dao.findProduct(Integer.parseInt(sc.nextLine()));
-//                break;
+                System.out.println("Find which id?");
+                PDao.findProduct(Integer.parseInt(sc.nextLine()));
+                break;
                 case 2:
 //                dao.findAllProducts();
 //                List<Product> all = dao.findAllProducts();

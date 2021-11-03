@@ -1,6 +1,6 @@
-package dao;
+package application.dao;
 
-import products.User;
+import application.products.User;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

@@ -1,8 +1,9 @@
-package sysFiles;
+package utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Singleton;
@@ -11,7 +12,8 @@ import javax.persistence.Persistence;
 import java.util.Scanner;
 
 @Singleton
-public class Producers {
+@Alternative
+public class AlternativeProducers {
 
     @Produces
     public EntityManager em() {
