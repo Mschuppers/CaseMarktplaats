@@ -1,6 +1,8 @@
 package sysFiles;
 
 import application.App;
+import application.Exceptions.UserAbortedAction;
+import application.Exceptions.ZeroValue;
 import application.sysFiles.Validator;
 import org.jboss.weld.junit5.auto.AddBeanClasses;
 import org.jboss.weld.junit5.auto.AddPackages;
@@ -19,7 +21,7 @@ class ValidatorTest {
     Validator v = new Validator();
 
     @Test
-    void validatePrice2BehindComma() {
+    void validatePrice2BehindComma() throws ZeroValue, UserAbortedAction {
         //Given
         String price = "14.99";
         // When
@@ -29,7 +31,7 @@ class ValidatorTest {
     }
 
     @Test
-    void validatePrice0BehindComma() {
+    void validatePrice0BehindComma() throws ZeroValue, UserAbortedAction {
         //Given
         double price = Double.parseDouble("14");
         // When
@@ -39,7 +41,7 @@ class ValidatorTest {
     }
 
     @Test
-    void validatePriceGreaterEqual() {
+    void validatePriceGreaterEqual() throws ZeroValue, UserAbortedAction {
         //Given
         String price = "5";
         // When
@@ -54,10 +56,7 @@ class ValidatorTest {
         //Given
         String price = "-1";
 
-        //2nd option, assert that an error of ZeroValue is thrown when  validate Price executes with -1
-        //Proof that this works (though broken still for ZeroValue.class) is that NullPointerException passes the test
-        //TODO figure out why a nullpointer is thrown to the log element
-        assertThrows(NullPointerException.class, () -> v.validatePrice(price));
+        assertThrows(ZeroValue.class, () -> v.validatePrice(price));
     }
 }
 

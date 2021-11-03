@@ -36,7 +36,7 @@ public class App {
     boolean start() {
 
         while (true) {
-            log.info("Welcome to the Product menu");
+            System.out.println("Welcome to the Product menu");
             System.out.println("Choose option");
             System.out.println("1) Choose find 1 product by ID");
             System.out.println("2) Choose find all available products");

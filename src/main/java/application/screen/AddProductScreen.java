@@ -1,5 +1,6 @@
 package application.screen;
 
+import application.Exceptions.UserAbortedAction;
 import application.products.Product;
 import application.products.User;
 import application.Exceptions.ZeroValue;
@@ -10,6 +11,7 @@ import application.sysFiles.Validator;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -50,14 +52,17 @@ public class AddProductScreen {
             p.setUser(marco);
 
             productDao.save(p);
-        } catch (NumberFormatException e) {
-            log.info("Ongeldig format is gebruikt");
+
         } catch (ZeroValue e){
-            log.info("Handeling afgebroken door gebruiker");
+            log.info(e.ValueEqualsZero());
+        } catch (UserAbortedAction e) {
+            log.info(e.ActionAbortedByUser());
+        } catch (InputMismatchException e) {
+            log.info(e.getMessage());
         }
     }
 
-    private String EnterPrice() throws ZeroValue {
+    private String EnterPrice() throws ZeroValue, UserAbortedAction, InputMismatchException {
         return vd.validatePrice(sc.nextLine().replace(",","."));
 
     }
