@@ -1,27 +1,30 @@
 package application;
 
 import application.dao.ProductDao;
+import application.product.Product;
+import application.screen.ManageProductScreen;
+import application.screen.SearchProductScreen;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
-import application.screen.AddProductScreen;
+import org.slf4j.event.Level;
 
 import javax.inject.Inject;
 import java.util.Scanner;
 
 
 public class App {
-    @Inject
-    private Logger log;
 
     @Inject
-    private AddProductScreen addProduct;
-
+    private ManageProductScreen manageProduct;
     @Inject
-    ProductDao PDao;
-
+    private SearchProductScreen searchProduct;
+    @Inject
+    private ProductDao pDao;
     @Inject
     private Scanner sc;
+    @Inject
+    private Logger logger;
 
 
     public static void main(String[] args) {
@@ -48,30 +51,40 @@ public class App {
             int input = Integer.parseInt(sc.nextLine());
             switch (input) {
                 case 1:
-                System.out.println("Find which id?");
-                PDao.findProduct(Integer.parseInt(sc.nextLine()));
-                break;
+                    try {
+                        System.out.println("Find which id?");
+                        System.out.println(searchProduct.byId(Integer.parseInt(sc.nextLine())));
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Er ging iets mis, mogelijk is het ID niet correct");
+                        logger.debug(Level.DEBUG + "ID was not found");
+                    }
                 case 2:
-//                dao.findAllProducts();
-//                List<Product> all = dao.findAllProducts();
-//                all.forEach(System.out::println);
+                    System.out.println("Listing all available products:");
+                    searchProduct.byAll();
                     break;
+
                 case 3:
-                    addProduct.insertProduct();
+                    manageProduct.insertProduct();
                     break;
+
                 case 4:
-//                int pId = sc.nextInt();
-//                System.out.println("Update which id?");
-//                dao.updateProduct(dao.findProduct(pId));
-//                break;
+                    System.out.println("Update which id?");
+                    manageProduct.updateProduct(pDao.findProduct(Integer.parseInt(sc.nextLine())));
+                    break;
+
                 case 5:
-//                System.out.println("Delete which id?");
-//                id = sc.nextInt();
-//                Product x = dao.findProduct(id);
-//                dao.deleteProduct(x);
-//                break;
+                    System.out.println("Delete which id?");
+                    try {
+                        pDao.deleteProduct((Product) pDao.findUserProduct(Integer.parseInt(sc.nextLine()), 1));
+                    } catch (Exception e) {
+                        System.out.println("Er ging iets mis, mogelijk is het ID niet correct");
+                        logger.debug(Level.DEBUG + "ID was not found");
+                        e.printStackTrace();
+                    }
+                    break;
                 case 0:
-                    System.out.println("Exiting application");
+                    System.out.println("Applicatie wordt afgesloten");
                     return false;
                 default:
                     System.out.println("default");

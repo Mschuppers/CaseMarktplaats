@@ -1,9 +1,8 @@
-package sysFiles;
+package application;
 
-import application.App;
-import application.Exceptions.UserAbortedAction;
-import application.Exceptions.ZeroValue;
-import application.sysFiles.Validator;
+import application.exception.UserAbortedAction;
+import application.exception.ZeroValue;
+import application.validator.Validator;
 import org.jboss.weld.junit5.auto.AddBeanClasses;
 import org.jboss.weld.junit5.auto.AddPackages;
 import org.jboss.weld.junit5.auto.EnableAlternatives;
@@ -18,10 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @AddBeanClasses(utils.AlternativeProducers.class)
 @EnableAlternatives(utils.AlternativeProducers.class)
 class ValidatorTest {
+
     Validator v = new Validator();
 
     @Test
     void validatePrice2BehindComma() throws ZeroValue, UserAbortedAction {
+
         //Given
         String price = "14.99";
         // When
