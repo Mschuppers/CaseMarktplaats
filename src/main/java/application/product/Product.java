@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @NamedQuery(name = "product.FindOneProduct", query = "SELECT p FROM Product p where p.id = :id")
@@ -15,9 +17,10 @@ import java.time.LocalDate;
 @NamedQuery(name = "product.FindAll", query = "SELECT p FROM Product p")
 
 
-
-
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Product {
 
@@ -40,7 +43,13 @@ public class Product {
     private User user;
 
 
-
-
+    @Override
+    public String toString() {
+        return "id: " + id +
+                " titel: " + name + '\n' +
+                "omschrijving: '" + description + '\n' +
+                "prijs: " + price + '\n' +
+                "plaatsingsdatum: " + datePublished + '\n';
+    }
 }
 

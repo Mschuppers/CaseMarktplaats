@@ -7,8 +7,8 @@ import javax.inject.Inject;
 
 public class ZeroValue extends Exception {
 
-@Inject
-private Logger logger;
+    @Inject
+    private Logger logger;
 
     public String ValueEqualsZero() {
         logger.info(Level.DEBUG + "Value of 0 was submitted by user");

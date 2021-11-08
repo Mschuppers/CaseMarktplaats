@@ -5,13 +5,13 @@ import org.slf4j.event.Level;
 
 import javax.inject.Inject;
 
-public class UserAbortedAction extends Exception{
+public class UserAbortedAction extends Exception {
 
-@Inject
-private Logger logger;
+    @Inject
+    private Logger logger;
 
-    public String ActionAbortedByUser(){
-        //logger.debug(Level.DEBUG + "Handeling afgebroken door user"); TODO Figure out why this is a nullpointer.
+    public String ActionAbortedByUser() {
+        logger.debug(Level.DEBUG + "Handeling afgebroken door user");
         return "Handeling afgebroken, product niet toegevoegd";
     }
 }

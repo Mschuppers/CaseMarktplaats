@@ -27,38 +27,25 @@ public class ProductDao {
     }
 
 
-    public void save(Product p) {
-        runnableTransaction(() -> em.persist(p));
-    }
-
+    public void save(Product p) {runnableTransaction(() -> em.persist(p));}
     public void update(Product p) {
         runnableTransaction(() -> em.merge(p));
     }
 
-
     public void deleteProduct(Product p) {
-        logger.info(Level.DEBUG + " Deleting " + p);
+        logger.debug(Level.DEBUG + " Deleting " + p);
+        System.out.println("Product id: "+p.getId()+" is nu verwijderd");
         runnableTransaction(() -> em.remove(p));
     }
 
     public Product findProduct(int id) {
         Product p = em.find(Product.class, id);
-        logger.info(Level.DEBUG + " Finding " + p);
+        logger.debug(Level.DEBUG + " Finding " + p.getId());
         return p;
     }
-
-    public Product findUserProduct(int id, int user_id) {
-        Query q = em.createNamedQuery("product.FindOneUserProduct", Product.class);
-        q.setParameter("id", id);
-        q.setParameter("user_id", user_id);
-        Product p = (Product) q.getSingleResult();
-        return p;
-    }
-
 
     public List<Product> findAllProducts() {
         var query = em.createNamedQuery("product.FindAll", Product.class);
-        logger.info(Level.INFO + "Returning all products");
         return query.getResultList();
     }
 }

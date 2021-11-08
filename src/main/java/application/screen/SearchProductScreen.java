@@ -1,10 +1,8 @@
 package application.screen;
 
 import application.dao.ProductDao;
-import application.exception.ZeroValue;
 import application.product.Product;
 import org.slf4j.Logger;
-import org.slf4j.event.Level;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -25,17 +23,15 @@ public class SearchProductScreen {
         try {
             Product p = productDao.findProduct(id);
             if (p != null) {
-                logger.debug(Level.DEBUG + " Found the id submitted: " + id);
                 return p;
-            } else {
-                throw new ZeroValue();
             }
-
-        } catch (ZeroValue zeroValue) {
-            logger.debug(Level.DEBUG + "Id niet gvonden");
+            throw new Exception();
+        } catch (
+                Exception e) {
+            System.out.println("De invoer ging niet goed, probeer het nog een keer met een geldig ID");
+            return byId(Integer.parseInt(sc.nextLine()));
         }
-        System.out.println("ID niet herkend, probeer het opnieuw");
-        return byId(Integer.parseInt(sc.nextLine()));
+
     }
 
     public void byAll() {

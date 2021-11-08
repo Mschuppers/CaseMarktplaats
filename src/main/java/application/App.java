@@ -1,15 +1,18 @@
 package application;
 
+
 import application.dao.ProductDao;
-import application.product.Product;
+import application.exception.UserAbortedAction;
+import application.exception.ZeroValue;
 import application.screen.ManageProductScreen;
 import application.screen.SearchProductScreen;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
-import org.slf4j.event.Level;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -36,61 +39,66 @@ public class App {
     }
 
 
-    boolean start() {
-
+    public boolean start() {
         while (true) {
             System.out.println("Welcome to the Product menu");
             System.out.println("Choose option");
-            System.out.println("1) Choose find 1 product by ID");
-            System.out.println("2) Choose find all available products");
-            System.out.println("3) Add a new product");
-            System.out.println("4) Update an excisting product");
-            System.out.println("5) Remove a product");
-
-
-            int input = Integer.parseInt(sc.nextLine());
-            switch (input) {
-                case 1:
-                    try {
-                        System.out.println("Find which id?");
+            System.out.println("1) Zoek product op ID");
+            System.out.println("2) Toon alle beschikbare producten");
+            System.out.println("3) Voeg een nieuw product toe");
+            System.out.println("4) Update een bestaand product");
+            System.out.println("5) Verwijder een product");
+            try {
+                int input = Integer.parseInt(sc.nextLine());
+                switch (input) {
+                    case 1:
+                        System.out.println("Welk Id zoek je?");
                         System.out.println(searchProduct.byId(Integer.parseInt(sc.nextLine())));
                         break;
-                    } catch (Exception e) {
-                        System.out.println("Er ging iets mis, mogelijk is het ID niet correct");
-                        logger.debug(Level.DEBUG + "ID was not found");
-                    }
-                case 2:
-                    System.out.println("Listing all available products:");
-                    searchProduct.byAll();
-                    break;
 
-                case 3:
-                    manageProduct.insertProduct();
-                    break;
+                    case 2:
+                        System.out.println("Alle beschikbare producten.");
+                        searchProduct.byAll();
+                        break;
 
-                case 4:
-                    System.out.println("Update which id?");
-                    manageProduct.updateProduct(pDao.findProduct(Integer.parseInt(sc.nextLine())));
-                    break;
+                    case 3:
+                        System.out.println("Een nieuw product toevoegen");
+                        manageProduct.insertProduct();
+                        break;
 
-                case 5:
-                    System.out.println("Delete which id?");
-                    try {
-                        pDao.deleteProduct((Product) pDao.findUserProduct(Integer.parseInt(sc.nextLine()), 1));
-                    } catch (Exception e) {
-                        System.out.println("Er ging iets mis, mogelijk is het ID niet correct");
-                        logger.debug(Level.DEBUG + "ID was not found");
-                        e.printStackTrace();
-                    }
-                    break;
-                case 0:
-                    System.out.println("Applicatie wordt afgesloten");
-                    return false;
-                default:
-                    System.out.println("default");
+                    case 4:
+                        System.out.println("Welk ID wordt geupdate?");
+                        manageProduct.updateProduct(pDao.findProduct(Integer.parseInt(sc.nextLine())));
+                        break;
+
+                    case 5:
+                        System.out.println("Welk ID moet worden verwijderd");
+                        pDao.deleteProduct(pDao.findProduct(Integer.parseInt(sc.nextLine())));
+                        break;
+                    case 0:
+                        System.out.println("Applicatie wordt afgesloten");
+                        return false;
+                    default:
+                        System.out.println("Ongeldige invoer ontvangen");
+                }
+
+            } catch (ZeroValue e) {
+                logger.info(e.ValueEqualsZero());
+                System.out.println("Er is '0' opgegeven");
+            } catch (UserAbortedAction e) {
+                logger.info(e.ActionAbortedByUser());
+                System.out.println("De actie wordt gestopt...");
+            } catch (InputMismatchException e) {
+                logger.info(e.getMessage());
+                System.out.println("De opgegeven waarde klopt niet met het format wat gevraagd wordt");
+            } catch (Exception e) {
+                System.out.println("Hier ging iets mis, neem contact op met de leverancier, " +
+                        "vermeld de volgende tijd en datum: " + LocalDateTime.now());
+                logger.error("Something went wrong here", e);
             }
-
         }
     }
 }
+
+
 

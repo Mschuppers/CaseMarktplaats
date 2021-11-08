@@ -3,7 +3,7 @@
     <Properties>
         <Property name="logPath">logfiles</Property>
         <Property name="rollingFileName">logfile</Property>
-
+        %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
         <property name="logpattern">LOG4J2 %highlight{[%-5level] %d{ HH:mm:ss.SSS} [%t] %c{1} - %msg%n}{FATAL=red
             blink, ERROR=red, WARN=yellow bold, INFO=WHITE, DEBUG=green bold, TRACE=blue}
         </property>
@@ -13,10 +13,14 @@
             <PatternLayout disableAnsi="false" pattern="${logpattern}"/>
         </Console>
         <RollingFile name="rollingFile" fileName="${logPath}/${rollingFileName}.log" filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log">
-            <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" />
+            <PatternLayout>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+            </PatternLayout>
             <Policies>
                 <OnStartupTriggeringPolicy />
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size = "2 MB"/>
+
             </Policies>
         </RollingFile>
     </Appenders>
@@ -24,11 +28,12 @@
 
 
     <Loggers>
-        <Root level="INFO" additivity="false">
-
-           <AppenderRef ref = "console"/>
+        <Root level="ALL">
+<!--           <AppenderRef ref = "console"/>-->
             <AppenderRef ref="rollingFile" />
         </Root>
+        <Logger name="org.example.marktplaats" level="ALL" additivity="true"/>
+        <Logger name="org.hibernate.SQL" level="ALL" additivity="true" />
 
     </Loggers>
 </Configuration>
