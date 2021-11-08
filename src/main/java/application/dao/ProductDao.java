@@ -6,8 +6,6 @@ import org.slf4j.event.Level;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -27,14 +25,17 @@ public class ProductDao {
     }
 
 
-    public void save(Product p) {runnableTransaction(() -> em.persist(p));}
+    public void save(Product p) {
+        runnableTransaction(() -> em.persist(p));
+    }
+
     public void update(Product p) {
         runnableTransaction(() -> em.merge(p));
     }
 
     public void deleteProduct(Product p) {
         logger.debug(Level.DEBUG + " Deleting " + p);
-        System.out.println("Product id: "+p.getId()+" is nu verwijderd");
+        System.out.println("Product id: " + p.getId() + " is nu verwijderd");
         runnableTransaction(() -> em.remove(p));
     }
 

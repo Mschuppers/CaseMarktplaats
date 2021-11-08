@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="OFF">
     <Properties>
         <Property name="logPath">logfiles</Property>
         <Property name="rollingFileName">logfile</Property>
@@ -17,7 +17,6 @@
             <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <OnStartupTriggeringPolicy />
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
                 <SizeBasedTriggeringPolicy size = "2 MB"/>
 
@@ -28,7 +27,7 @@
 
 
     <Loggers>
-        <Root level="ALL">
+        <Root level="OFF">
 <!--           <AppenderRef ref = "console"/>-->
             <AppenderRef ref="rollingFile" />
         </Root>

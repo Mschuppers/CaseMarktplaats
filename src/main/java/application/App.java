@@ -6,17 +6,18 @@ import application.exception.UserAbortedAction;
 import application.exception.ZeroValue;
 import application.screen.ManageProductScreen;
 import application.screen.SearchProductScreen;
+import application.sysFiles.Header;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
 public class App {
+
 
     @Inject
     private ManageProductScreen manageProduct;
@@ -28,7 +29,8 @@ public class App {
     private Scanner sc;
     @Inject
     private Logger logger;
-
+    @Inject
+    private Header hd;
 
     public static void main(String[] args) {
         Weld weld = new Weld();
@@ -38,16 +40,17 @@ public class App {
         app.start();
     }
 
-
     public boolean start() {
+        hd.createHeader();
         while (true) {
-            System.out.println("Welcome to the Product menu");
-            System.out.println("Choose option");
-            System.out.println("1) Zoek product op ID");
-            System.out.println("2) Toon alle beschikbare producten");
-            System.out.println("3) Voeg een nieuw product toe");
-            System.out.println("4) Update een bestaand product");
-            System.out.println("5) Verwijder een product");
+            System.out.println("************Product Beheer************");
+            System.out.println("*Kies uit en van de volgende opties  *");
+            System.out.println("*1) Zoek product op ID               *");
+            System.out.println("*2) Toon alle beschikbare producten  *");
+            System.out.println("*3) Voeg een nieuw product toe       *");
+            System.out.println("*4) Update een bestaand product      *");
+            System.out.println("*5) Verwijder een product            *");
+            System.out.println("**************************************");
             try {
                 int input = Integer.parseInt(sc.nextLine());
                 switch (input) {
@@ -92,9 +95,7 @@ public class App {
                 logger.info(e.getMessage());
                 System.out.println("De opgegeven waarde klopt niet met het format wat gevraagd wordt");
             } catch (Exception e) {
-                System.out.println("Hier ging iets mis, neem contact op met de leverancier, " +
-                        "vermeld de volgende tijd en datum: " + LocalDateTime.now());
-                logger.error("Something went wrong here", e);
+                System.out.println("Het opgegeven ID bestaat niet, is het goede nummer ingevuld?");
             }
         }
     }

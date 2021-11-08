@@ -31,7 +31,6 @@ public class SearchProductScreen {
             System.out.println("De invoer ging niet goed, probeer het nog een keer met een geldig ID");
             return byId(Integer.parseInt(sc.nextLine()));
         }
-
     }
 
     public void byAll() {

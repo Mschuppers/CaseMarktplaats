@@ -47,7 +47,7 @@ public class Product {
     public String toString() {
         return "id: " + id +
                 " titel: " + name + '\n' +
-                "omschrijving: '" + description + '\n' +
+                "omschrijving: " + description + '\n' +
                 "prijs: " + price + '\n' +
                 "plaatsingsdatum: " + datePublished + '\n';
     }

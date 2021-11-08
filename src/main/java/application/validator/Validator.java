@@ -30,7 +30,7 @@ public class Validator {
             System.out.println("Foutieve invoer ontvangen, opnieuw proberen?" +
                     "\n Y: Doorgaan" +
                     "\n N: Stoppen");
-            logger.info("Faulty input detected, either input = 0 or negative or no digit was given");
+            logger.info(Level.DEBUG + "Faulty input detected, either input = 0 or negative or no digit was given");
             switch (sc.nextLine().toLowerCase()) {
                 case "y":
                     priceRetry();
@@ -64,7 +64,7 @@ public class Validator {
     }
 
     private String cancelInput() throws UserAbortedAction {
-        logger.debug(Level.DEBUG + " User opted to discontinue action");
+        logger.debug(Level.INFO + " User opted to discontinue action");
         throw new UserAbortedAction();
     }
 
