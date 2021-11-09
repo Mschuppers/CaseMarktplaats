@@ -4,6 +4,7 @@ package application;
 import application.dao.ProductDao;
 import application.exception.UserAbortedAction;
 import application.exception.ZeroValue;
+import application.product.Product;
 import application.screen.ManageProductScreen;
 import application.screen.SearchProductScreen;
 import application.sysFiles.Header;
@@ -71,7 +72,7 @@ public class App {
 
                     case 4:
                         System.out.println("Welk ID wordt geupdate?");
-                        manageProduct.updateProduct(pDao.findProduct(Integer.parseInt(sc.nextLine())));
+                        manageProduct.updateProduct(searchProduct.byId(Integer.parseInt(sc.nextLine())));
                         break;
 
                     case 5:
@@ -96,6 +97,7 @@ public class App {
                 System.out.println("De opgegeven waarde klopt niet met het format wat gevraagd wordt");
             } catch (Exception e) {
                 System.out.println("Het opgegeven ID bestaat niet, is het goede nummer ingevuld?");
+                e.printStackTrace();
             }
         }
     }

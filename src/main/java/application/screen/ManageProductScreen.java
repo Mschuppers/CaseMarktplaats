@@ -46,6 +46,7 @@ public class ManageProductScreen {
     }
 
     public void updateProduct(Product p) throws ZeroValue, UserAbortedAction {
+
         System.out.println("Update welk onderdeel?");
         System.out.println("1) Naam ");
         System.out.println("2) Omschrijving");
@@ -55,17 +56,20 @@ public class ManageProductScreen {
             case 1:
                 System.out.println("Titel (max 40 karakters): ");
                 p.setName(sc.nextLine());
+                productDao.update(p);
                 break;
             case 2:
                 System.out.println("Omschrijving (max 200 karakters): ");
                 p.setDescription(sc.nextLine());
+                productDao.update(p);
                 break;
             case 3:
                 System.out.println("De gewenste prijs (max 2 cijfers achter de komma): ");
                 p.setPrice(Double.parseDouble(enterPrice().replace(',', '.')));
+                productDao.update(p);
                 break;
         }
-        productDao.update(p);
+
 
 
     }

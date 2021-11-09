@@ -22,6 +22,7 @@ public class ProductDao {
         em.getTransaction().begin();
         subject.run();
         em.getTransaction().commit();
+
     }
 
 
