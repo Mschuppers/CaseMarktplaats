@@ -9,8 +9,7 @@ import org.jboss.weld.junit5.auto.EnableAlternatives;
 import org.jboss.weld.junit5.auto.EnableAutoWeld;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoWeld
 @AddPackages(App.class)
@@ -21,34 +20,31 @@ class ValidatorTest {
     Validator v = new Validator();
 
     @Test
-    void validatePrice2BehindComma() throws ZeroValue, UserAbortedAction {
+    void validatePrice2BehindComma() {
 
         //Given
         String price = "14.99";
-        // When
-        Double result = Double.parseDouble(v.validatePrice("14.99"));
+
         //  Then
-        assertEquals(Double.parseDouble(price), result);
+        assertTrue(v.validatePrice(price));
     }
 
     @Test
-    void validatePrice0BehindComma() throws ZeroValue, UserAbortedAction {
+    void validatePrice0BehindComma()  {
         //Given
-        double price = Double.parseDouble("14");
-        // When
-        Double result = Double.parseDouble(v.validatePrice("14"));
+        String price = ("14");
+
         //  Then
-        assertEquals(price, result);
+        assertTrue(v.validatePrice(price));
     }
 
     @Test
-    void validatePriceGreaterEqual() throws ZeroValue, UserAbortedAction {
+    void validatePriceGreaterEqual()  {
         //Given
         String price = "5";
-        // When
-        double result = Double.parseDouble(v.validatePrice(price));
+
         //  Then
-        assert (result >= 0);
+        assertTrue(v.validatePrice(price));
     }
 
 
@@ -57,7 +53,7 @@ class ValidatorTest {
         //Given
         String price = "-1";
 
-        assertThrows(ZeroValue.class, () -> v.validatePrice(price));
+        assertFalse(v.validatePrice(price));
     }
 }
 

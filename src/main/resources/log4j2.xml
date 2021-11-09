@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="OFF">
+<Configuration status="info">
     <Properties>
         <Property name="logPath">logfiles</Property>
         <Property name="rollingFileName">logfile</Property>
@@ -27,7 +27,7 @@
 
 
     <Loggers>
-        <Root level="OFF">
+        <Root level="debug">
 <!--           <AppenderRef ref = "console"/>-->
             <AppenderRef ref="rollingFile" />
         </Root>

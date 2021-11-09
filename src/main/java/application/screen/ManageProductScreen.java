@@ -5,19 +5,13 @@ import application.dao.UserDao;
 import application.exception.UserAbortedAction;
 import application.exception.ZeroValue;
 import application.product.Product;
-import application.product.User;
 import application.validator.Validator;
-import lombok.SneakyThrows;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManageProductScreen {
-    @Inject
-    private Logger log;
     @Inject
     private Scanner sc;
     @Inject
@@ -27,56 +21,66 @@ public class ManageProductScreen {
     @Inject
     private ProductDao productDao;
 
-
-    @SneakyThrows
-    public void insertProduct() throws ZeroValue, UserAbortedAction {
+    public void insertProduct() {
         Product p = new Product();
-
         System.out.println("Titel (max 40 karakters): ");
-        p.setName(vd.validateText(sc.nextLine(), 41));
+        enterName(p, sc.nextLine(), 40);
         System.out.println("Omschrijving (max 200 karakters): ");
-        p.setDescription(vd.validateText(sc.nextLine(), 201));
+        enterDescription(p, sc.nextLine(), 200);
         System.out.println("De gewenste prijs: ");
-        p.setPrice(Double.parseDouble(enterPrice().replace(',', '.')));
+        enterPrice(p, sc.nextLine().replace(',', '.'));
         p.setDatePublished(LocalDate.now());
-        User marco = userDao.findByName("Marco");
-        p.setUser(marco);
+        p.setUser(userDao.findByName("Marco"));
         productDao.save(p);
-
     }
 
     public void updateProduct(Product p) throws ZeroValue, UserAbortedAction {
-
         System.out.println("Update welk onderdeel?");
         System.out.println("1) Naam ");
         System.out.println("2) Omschrijving");
         System.out.println("3) Prijs");
-        int input = Integer.parseInt(sc.nextLine());
-        switch (input) {
+        switch (Integer.parseInt(sc.nextLine())) {
             case 1:
                 System.out.println("Titel (max 40 karakters): ");
-                p.setName(sc.nextLine());
-                productDao.update(p);
+                enterName(p, sc.nextLine(), 40);
                 break;
             case 2:
                 System.out.println("Omschrijving (max 200 karakters): ");
-                p.setDescription(sc.nextLine());
-                productDao.update(p);
+                enterDescription(p, sc.nextLine(), 200);
                 break;
             case 3:
                 System.out.println("De gewenste prijs (max 2 cijfers achter de komma): ");
-                p.setPrice(Double.parseDouble(enterPrice().replace(',', '.')));
-                productDao.update(p);
+                enterPrice(p, sc.nextLine().replace(',', '.'));
                 break;
         }
-
-
-
+        productDao.update(p);
     }
 
-    private String enterPrice() throws ZeroValue, UserAbortedAction, InputMismatchException {
-        return vd.validatePrice(sc.nextLine().replace(",", "."));
+    private void enterPrice(Product p, String inputPrice) {
+        if (vd.validatePrice(inputPrice)) {
+            p.setPrice(Double.parseDouble(inputPrice.replace(',', '.')));
+        } else {
+            System.out.println("Prijs is niet akkoord, probeer het opnieuw");
+            enterPrice(p, sc.nextLine().replace(',', '.'));
+        }
+    }
 
+    private void enterDescription(Product p, String inputDescription, int max) {
+        if (vd.validateText(inputDescription, max)) {
+            p.setDescription(inputDescription);
+        } else {
+            System.out.println("Omschrijving is niet akkoord, probeer het opnieuw");
+            enterDescription(p, sc.nextLine(), max);
+        }
+    }
+
+    private void enterName(Product p, String nameInput, int max) {
+        if (vd.validateText(nameInput, max)) {
+            p.setName(nameInput);
+        } else {
+            System.out.println("Opgegeven titel is niet akkoord, probeer opnieuw");
+            enterName(p, nameInput, max);
+        }
     }
 }
 

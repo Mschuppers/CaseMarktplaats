@@ -2,7 +2,6 @@ package application.screen;
 
 import application.dao.ProductDao;
 import application.product.Product;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -12,9 +11,6 @@ public class SearchProductScreen {
 
     @Inject
     private ProductDao productDao;
-
-    @Inject
-    private Logger logger;
 
     @Inject
     private Scanner sc;

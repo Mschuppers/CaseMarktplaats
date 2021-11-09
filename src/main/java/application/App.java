@@ -1,10 +1,8 @@
 package application;
 
-
 import application.dao.ProductDao;
 import application.exception.UserAbortedAction;
 import application.exception.ZeroValue;
-import application.product.Product;
 import application.screen.ManageProductScreen;
 import application.screen.SearchProductScreen;
 import application.sysFiles.Header;
@@ -16,10 +14,7 @@ import javax.inject.Inject;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class App {
-
-
     @Inject
     private ManageProductScreen manageProduct;
     @Inject
@@ -53,8 +48,7 @@ public class App {
             System.out.println("*5) Verwijder een product            *");
             System.out.println("**************************************");
             try {
-                int input = Integer.parseInt(sc.nextLine());
-                switch (input) {
+                switch (Integer.parseInt(sc.nextLine())) {
                     case 1:
                         System.out.println("Welk Id zoek je?");
                         System.out.println(searchProduct.byId(Integer.parseInt(sc.nextLine())));
@@ -77,7 +71,7 @@ public class App {
 
                     case 5:
                         System.out.println("Welk ID moet worden verwijderd");
-                        pDao.deleteProduct(pDao.findProduct(Integer.parseInt(sc.nextLine())));
+                        pDao.deleteProduct(searchProduct.byId(Integer.parseInt(sc.nextLine())));
                         break;
                     case 0:
                         System.out.println("Applicatie wordt afgesloten");
@@ -85,7 +79,6 @@ public class App {
                     default:
                         System.out.println("Ongeldige invoer ontvangen");
                 }
-
             } catch (ZeroValue e) {
                 logger.info(e.ValueEqualsZero());
                 System.out.println("Er is '0' opgegeven");
